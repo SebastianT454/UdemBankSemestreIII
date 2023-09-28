@@ -1,0 +1,158 @@
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Banco_CodigoLimpio.Clases;
+
+namespace Banco_CodigoLimpio.BaseDeDatos
+{
+    public class GrupoAhorro_DB
+    {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
+
+        [BsonElement("nombre")]
+        public string Nombre { get; set; }
+
+        [BsonElement("usuarios")]
+        public List<Usuario_DB> Usuarios { get; set; }
+
+        [BsonElement("cuentas_ahorro")]
+        public List<CuentaAhorro_DB_GrupoAhorro> CuentasAhorro { get; set; }
+
+        public GrupoAhorro_DB(string nombre)
+        {
+            Nombre = nombre;
+            Usuarios = new List<Usuario_DB>();
+            CuentasAhorro = new List<CuentaAhorro_DB_GrupoAhorro>();
+        }
+
+        public static IMongoCollection<GrupoAhorro_DB> Obtener_CollecionGrupoAhorro()
+        {
+            // Obteniendo la base de datos.
+            var database = BaseDeDatos.BaseDeDatos_Gestor.ObtenerBaseDeDatos();
+
+            // Obteniendo la base de datos de la COLECCION.
+            var GrupoAhorro_Collection = database.GetCollection<GrupoAhorro_DB>("GrupoAhorro");
+
+            return GrupoAhorro_Collection;
+        }
+        public static List<GrupoAhorro_DB> Obtener_GruposAhorro_DB()
+        {
+            // Obteniendo la base de datos de la COLECCION.
+            var GrupoAhorro_Collection = Obtener_CollecionGrupoAhorro();
+
+            // Obteniendo todos los grupos de ahorro en la coleccion.
+
+            List<GrupoAhorro_DB> lista_GrupoAhorro = GrupoAhorro_Collection.Find(d => true).ToList();
+
+            return lista_GrupoAhorro;
+
+        }
+        public static void CrearGrupoAhorro(Usuario_DB usuario)
+        {
+            // Verificando si el usuario puede crear el grupo.
+
+            Boolean usuario_puede_generar_grupo = VerificarGruposAhorro_Usuario(usuario);
+
+            if (usuario_puede_generar_grupo == true)
+            {
+                // Obteniendo el nombre del gurpo de ahorro.
+                string? Nombre_GrupoAhorro;
+
+                do
+                {
+                    Console.WriteLine("Ingrese el nombre del grupo de ahorro: ");
+                    Nombre_GrupoAhorro = Console.ReadLine();
+
+                    Console.WriteLine("-----------------------------------------------");
+                }
+                while (Nombre_GrupoAhorro == "");
+
+                // Obteniendo la base de datos de la COLECCION de los grupos de Ahorro.
+                var GrupoAhorro_Collection = Obtener_CollecionGrupoAhorro();
+
+                // Obteniendo la base de datos de la COLECCION de los usuarios.
+                var Usuarios_Collection = Usuario_DB.Obtener_CollecionUsuarios();
+
+                // Generando la cuenta de ahorro en la base de datos.
+                var Grupo_Ahorro = new GrupoAhorro_DB(Nombre_GrupoAhorro);
+
+                // Añadiendo primer usuario al grupo de ahorro.
+                Grupo_Ahorro.Usuarios.Add(usuario);
+
+                GrupoAhorro_Collection.InsertOne(Grupo_Ahorro);
+
+                // Actualizando la lista de grupos de ahorro del usuario.
+                var filter = Builders<Usuario_DB>.Filter.Eq(u => u.Id, usuario.Id);
+                var update = Builders<Usuario_DB>.Update.Push(u => u.GruposAhorro, Grupo_Ahorro);
+
+                var result = Usuarios_Collection.UpdateOne(filter, update);
+
+            }
+            else
+            {
+                Console.WriteLine("Error: Maximo grupo de ahorros alcanzado.");
+            }
+        }
+        public static Boolean VerificarGruposAhorro_Usuario(Usuario_DB usuario_asociado)
+        {
+            // Obteniendo la base de datos de la COLECCION.
+            var Usuarios_Collection = Usuario_DB.Obtener_CollecionUsuarios();
+
+            // Crear un filtro para buscar el usuario por su Id
+            var filtro = Builders<Usuario_DB>.Filter.Eq(u => u.Id, usuario_asociado.Id);
+
+            // Utilizar el filtro para encontrar el usuario en la colección
+            Usuario_DB usuario_actualizado = Usuarios_Collection.Find(filtro).FirstOrDefault();
+
+            // Obteniendo la información actualizada del usuario.
+
+            List<GrupoAhorro_DB> GruposDeAhorro_usuario = usuario_actualizado.GruposAhorro;
+
+            /*
+            foreach (GrupoAhorro_DB Grupo_ahorro in usuario_actualizado.GruposAhorro)
+            {
+                Console.WriteLine(Grupo_ahorro.Nombre);
+            }
+            */
+
+            if (usuario_actualizado != null && GruposDeAhorro_usuario.Count < Configuracion.max_grupos_ahorro_por_usuario)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static void Actualizar_GrupoAhorro(Usuario_DB usuario, GrupoAhorro_DB Grupo_Ahorro)
+        {
+            // Obteniendo la base de datos de la COLECCION de los grupos de Ahorro.
+            var GrupoAhorro_Collection = Obtener_CollecionGrupoAhorro();
+
+            // Obteniendo la base de datos de la COLECCION de los usuarios.
+            var Usuarios_Collection = Usuario_DB.Obtener_CollecionUsuarios();
+
+            // Actualizando la lista de grupos de ahorro del usuario.
+            var filter_user = Builders<Usuario_DB>.Filter.Eq(u => u.Id, usuario.Id);
+            var update_user = Builders<Usuario_DB>.Update.Push(u => u.GruposAhorro, Grupo_Ahorro);
+
+            var result_user = Usuarios_Collection.UpdateOne(filter_user, update_user);
+
+            // Actualizando la lista de usuarios en el grupo de ahorro.
+            var filter_grupoAhorro = Builders<GrupoAhorro_DB>.Filter.Eq(g => g.Id, Grupo_Ahorro.Id);
+            var update_grupoAhorro = Builders<GrupoAhorro_DB>.Update.Push(g => g.Usuarios, usuario);
+
+            var result_grupoAhorro = GrupoAhorro_Collection.UpdateOne(filter_grupoAhorro, update_grupoAhorro);
+
+        }
+
+    }
+}
