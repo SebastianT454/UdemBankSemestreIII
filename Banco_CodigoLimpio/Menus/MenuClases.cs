@@ -100,34 +100,63 @@ namespace Banco_CodigoLimpio.Menus
         public static void Menu_Grupo_De_Ahorro(Usuario_DB Usuario)
         {
             Console.WriteLine("-- TUS GRUPOS DE AHORRO --");
-            Console.WriteLine("1. Grupo de ahorro # 1");
-            Console.WriteLine("2. Grupo de ahorro # 2");
-            Console.WriteLine("3. Grupo de ahorro # 3");
-            Console.WriteLine("4. Volver al menu principal.");
+            var gruposAhorro = Usuario.GruposAhorro;
+
+            for (int i = 0; i < gruposAhorro.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. Grupo de ahorro #{i + 1} - {gruposAhorro[i].Nombre}");
+            }
+
+            Console.WriteLine($"{gruposAhorro.Count + 1}. Crear nuevo grupo de ahorro");
+            Console.WriteLine($"{gruposAhorro.Count + 2}. Volver al menú principal.");
+
+            int opcion = int.Parse(Console.ReadLine());
+
+            if (opcion >= 1 && opcion <= gruposAhorro.Count)
+            {
+                var grupoSeleccionado = gruposAhorro[opcion - 1];
+                MenuGrupoDeAhorro(Usuario, grupoSeleccionado); // Llama al método con el grupo seleccionado
+            }
+            else if (opcion == gruposAhorro.Count + 2)
+            {
+                Console.WriteLine("-----------------------------------------------");
+                Menu_Usuario(Usuario); // Vuelve al menú principal
+            }
+            else
+            {
+                Console.WriteLine("Opción no válida.");
+            }
+        }
+
+        public static void MenuGrupoDeAhorro(Usuario_DB Usuario, GrupoAhorro_DB grupoAhorro)
+        {
+            Console.WriteLine($"-- GRUPO DE AHORRO: {grupoAhorro.Nombre} --");
+            Console.WriteLine("1. Ingresar capital a grupo de ahorro");
+            Console.WriteLine("2. Invitar a un usuario al grupo");
+            Console.WriteLine("3. Volver al menú principal.");
 
             int opcion = int.Parse(Console.ReadLine());
 
             switch (opcion)
             {
                 case 1:
-                    Menu_grupo_de_ahorro_1(Usuario);
+                    // Lógica para ingresar capital al grupo de ahorro
                     break;
 
                 case 2:
-                    Menu_grupo_de_ahorro_2(Usuario);
+                    // Lógica para invitar a un usuario al grupo de ahorro
                     break;
 
                 case 3:
-                    Menu_grupo_de_ahorro_3(Usuario);
+                    Console.WriteLine("-----------------------------------------------");
+                    Menu_Grupo_De_Ahorro(Usuario); // Vuelve al menú de grupos de ahorro
                     break;
 
-                case 4:
-                    Console.WriteLine("-----------------------------------------------");
-                    Menu_Usuario(Usuario);
+                default:
+                    Console.WriteLine("Opción no válida.");
                     break;
             }
         }
-
         public static void Menu_grupo_de_ahorro_1(Usuario_DB Usuario)
         {
             Console.WriteLine("-- TU GRUPO DE AHORRO --");
