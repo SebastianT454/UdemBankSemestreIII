@@ -76,5 +76,10 @@ namespace Banco_CodigoLimpio.BaseDeDatos
             return CuentasDeAhorro;
         }
 
+        public void CalcularTotalGanancias()
+        {
+
+        }
+
     }
 }

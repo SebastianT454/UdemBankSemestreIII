@@ -75,13 +75,16 @@ namespace Banco_CodigoLimpio.Menus
         {
             Console.WriteLine("-- BIENVENIDO A TU CUENTA DE AHORRO --");
             Console.WriteLine(" ID de tu cuenta ");
-            // Aqui va el console writeline de la id
-            Console.WriteLine(" Capital de la cuenta ");
-            // Aqui va el console writeline del capital
-            Console.WriteLine(" Usuario de la cuenta ");
-            // Aqui va el console writeline del usuario
-            Console.WriteLine(" Ingresa 1 para volver al menu de usuario");
+            Console.WriteLine(CuentaAhorro_DB_Usuario.ObtenerIdCuentaAhorro(Usuario));
 
+            Console.WriteLine(" Capital de la cuenta ");
+            Console.WriteLine(CuentaAhorro_DB_Usuario.ObtenerCapitalCuentaAhorro(Usuario)); 
+
+            Console.WriteLine(" Usuario de la cuenta ");
+            Console.WriteLine(CuentaAhorro_DB_Usuario.ObtenerNombreUsuario(Usuario));
+            
+            Console.WriteLine(" Ingresa 1 para volver al menu de usuario");
+            
             int opcion = int.Parse(Console.ReadLine());
 
             switch (opcion)

@@ -163,6 +163,5 @@ namespace Banco_CodigoLimpio.BaseDeDatos
             var result = CuentaAhorro_Collection.UpdateOne(filter, update);
 
         }
-
     }
 }

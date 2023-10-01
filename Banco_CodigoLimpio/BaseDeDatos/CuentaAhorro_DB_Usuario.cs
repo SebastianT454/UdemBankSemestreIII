@@ -76,5 +76,38 @@ namespace Banco_CodigoLimpio.BaseDeDatos
             return CuentaDeAhorro;
         }
 
+        public static string ObtenerIdCuentaAhorro(Usuario_DB usuario_asociado)
+        {
+            CuentaAhorro_DB_Usuario CuentaDeAhorro = usuario_asociado.CuentaAhorro;
+
+            if (CuentaDeAhorro != null)
+            {
+                return CuentaDeAhorro.Id;
+            }
+            else
+            {
+                return null; // Opcional: Puedes manejar el caso en el que no haya cuenta de ahorro.
+            }
+        }
+
+        public static float ObtenerCapitalCuentaAhorro(Usuario_DB usuario_asociado)
+        {
+            CuentaAhorro_DB_Usuario CuentaDeAhorro = usuario_asociado.CuentaAhorro;
+
+            if (CuentaDeAhorro != null)
+            {
+                return CuentaDeAhorro.Saldo;
+            }
+            else
+            {
+                return 0.0f; // Opcional: Puedes manejar el caso en el que no haya cuenta de ahorro.
+            }
+        }
+
+        public static string ObtenerNombreUsuario(Usuario_DB usuario_asociado)
+        {
+            return usuario_asociado.Nombre;
+        }
+
     }
 }

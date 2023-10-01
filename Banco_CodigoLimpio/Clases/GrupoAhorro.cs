@@ -65,7 +65,7 @@ namespace Banco_CodigoLimpio.Clases
 
                 GrupoAhorro_DB GrupoAhorro_usuario_deseado = grupos_ahorro_usuario_deseado[opcion_seleccionada-1];
 
-                GrupoAhorro.anadir_usuarios(Nombre_Usuario_deseado, GrupoAhorro_usuario_deseado);
+                anadir_usuarios(Nombre_Usuario_deseado, GrupoAhorro_usuario_deseado);
 
                 Console.WriteLine("Usuario invitado exitosamente.");
             }
@@ -75,17 +75,35 @@ namespace Banco_CodigoLimpio.Clases
 
         public static void anadir_usuarios(string Usuario_deseado, GrupoAhorro_DB GrupoAhorro_usuario_deseado)
         {
-                // Verificar si New_Usuario ya existe en la lista de usuarios
-                Usuario_DB? usuario_deseado = Usuario_DB.ObtenerUsuario_byName_DB(Usuario_deseado);
+            // Verificar si New_Usuario ya existe en la lista de usuarios
+            Usuario_DB? usuario_deseado = Usuario_DB.ObtenerUsuario_byName_DB(Usuario_deseado);
 
-                if (usuario_deseado != null)
+            if (usuario_deseado != null)
+            {
+                // Verificar si el grupo de ahorro ya tiene 2 usuarios invitados
+                if (GrupoAhorro_usuario_deseado.Usuarios.Count < 2)
                 {
-                GrupoAhorro_DB.Actualizar_GrupoAhorro(usuario_deseado, GrupoAhorro_usuario_deseado);
+                    // Verificar si el usuario ya está en el grupo
+                    if (!GrupoAhorro_usuario_deseado.Usuarios.Contains(usuario_deseado))
+                    {
+                        // Agregar el usuario al grupo
+                        GrupoAhorro_DB.Actualizar_GrupoAhorro(usuario_deseado, GrupoAhorro_usuario_deseado);
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("El usuario ya está en el grupo.");
+                    }
                 }
                 else
                 {
-                return;
+                    Console.WriteLine("El grupo de ahorro ya ha invitado a 2 usuarios.");
                 }
+            }
+            else
+            {
+                Console.WriteLine("Usuario no encontrado.");
+            }
         }
 
         public static void pagar_prestamo()
