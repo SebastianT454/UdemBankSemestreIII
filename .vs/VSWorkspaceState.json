@@ -1,10 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Banco_CodigoLimpio",
-    "\\Banco_CodigoLimpio\\BaseDeDatos",
-    "\\Banco_CodigoLimpio\\Clases"
+    ""
   ],
-  "SelectedNode": "\\Banco_CodigoLimpio\\BaseDeDatos\\Usuario_DB.cs",
+  "SelectedNode": "\\Banco_CodigoLimpio.sln",
   "PreviewInSolutionExplorer": false
 }

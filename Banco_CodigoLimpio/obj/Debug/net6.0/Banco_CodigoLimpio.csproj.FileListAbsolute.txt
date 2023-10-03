@@ -58,3 +58,33 @@ C:\Users\Nicolas Tobon R\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj
 C:\Users\Nicolas Tobon R\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.pdb
 C:\Users\Nicolas Tobon R\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.genruntimeconfig.cache
 C:\Users\Nicolas Tobon R\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\ref\Banco_CodigoLimpio.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\Banco_CodigoLimpio.exe
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\Banco_CodigoLimpio.deps.json
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\Banco_CodigoLimpio.runtimeconfig.json
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\Banco_CodigoLimpio.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\Banco_CodigoLimpio.pdb
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\AWSSDK.Core.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\AWSSDK.SecurityToken.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\DnsClient.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\MongoDB.Bson.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\MongoDB.Driver.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\MongoDB.Driver.Core.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\MongoDB.Libmongocrypt.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\SharpCompress.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\Snappier.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\ZstdSharp.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\runtimes\linux\native\libmongocrypt.so
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\bin\Debug\net6.0\runtimes\win\native\mongocrypt.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.csproj.AssemblyReference.cache
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.AssemblyInfoInputs.cache
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.AssemblyInfo.cs
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.csproj.CoreCompileInputs.cache
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.csproj.CopyComplete
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\refint\Banco_CodigoLimpio.dll
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.pdb
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\Banco_CodigoLimpio.genruntimeconfig.cache
+C:\Users\Sebastian\Source\Repos\UdemBankSemestreIII\Banco_CodigoLimpio\obj\Debug\net6.0\ref\Banco_CodigoLimpio.dll

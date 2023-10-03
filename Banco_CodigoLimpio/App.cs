@@ -27,7 +27,7 @@ namespace Banco_CodigoLimpio
         {
             while (true)
             {
-                Menus.MenuGrafico.Menu_Principal(Usuario);
+                Menus.MenuClases.Menu_Usuario(Usuario);
             }
 
         }

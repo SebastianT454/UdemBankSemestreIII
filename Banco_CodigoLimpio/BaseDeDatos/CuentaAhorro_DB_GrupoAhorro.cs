@@ -64,16 +64,16 @@ namespace Banco_CodigoLimpio.BaseDeDatos
 
             // Actualizando la lista de cuentas de ahorro del usuario.
             var filter = Builders<GrupoAhorro_DB>.Filter.Eq(g => g.Id, grupo_ahorro.Id);
-            var update = Builders<GrupoAhorro_DB>.Update.Push(g => g.CuentasAhorro, CuentaAhorro);
+            var update = Builders<GrupoAhorro_DB>.Update.Set(g => g.CuentaAhorro, CuentaAhorro);
 
             var result = GrupoAhorro_Collection.UpdateOne(filter, update);
 
         }
-        public static List<CuentaAhorro_DB_GrupoAhorro> ObtenerCuentasAhorro_GruposAhorro(GrupoAhorro_DB Grupo_Ahorro)
+        public static CuentaAhorro_DB_GrupoAhorro? ObtenerCuentaAhorro_GrupoAhorro(GrupoAhorro_DB Grupo_Ahorro)
         {
-            List<CuentaAhorro_DB_GrupoAhorro> CuentasDeAhorro = Grupo_Ahorro.CuentasAhorro;
+            CuentaAhorro_DB_GrupoAhorro CuentaDeAhorro = Grupo_Ahorro.CuentaAhorro;
 
-            return CuentasDeAhorro;
+            return CuentaDeAhorro;
         }
 
         public void CalcularTotalGanancias()

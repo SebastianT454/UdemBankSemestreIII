@@ -22,14 +22,13 @@ namespace Banco_CodigoLimpio.BaseDeDatos
         [BsonElement("usuarios")]
         public List<Usuario_DB> Usuarios { get; set; }
 
-        [BsonElement("cuentas_ahorro")]
-        public List<CuentaAhorro_DB_GrupoAhorro> CuentasAhorro { get; set; }
+        [BsonElement("cuenta_ahorro")]
+        public CuentaAhorro_DB_GrupoAhorro? CuentaAhorro { get; set; }
 
         public GrupoAhorro_DB(string nombre)
         {
             Nombre = nombre;
             Usuarios = new List<Usuario_DB>();
-            CuentasAhorro = new List<CuentaAhorro_DB_GrupoAhorro>();
         }
 
         public static IMongoCollection<GrupoAhorro_DB> Obtener_CollecionGrupoAhorro()
@@ -87,6 +86,8 @@ namespace Banco_CodigoLimpio.BaseDeDatos
                 Grupo_Ahorro.Usuarios.Add(usuario);
 
                 GrupoAhorro_Collection.InsertOne(Grupo_Ahorro);
+
+                CuentaAhorro_DB_GrupoAhorro.CrearCuentaAhorro_GrupoAhorro(Grupo_Ahorro);
 
                 // Actualizando la lista de grupos de ahorro del usuario.
                 var filter = Builders<Usuario_DB>.Filter.Eq(u => u.Id, usuario.Id);
@@ -151,6 +152,23 @@ namespace Banco_CodigoLimpio.BaseDeDatos
             var update_grupoAhorro = Builders<GrupoAhorro_DB>.Update.Push(g => g.Usuarios, usuario);
 
             var result_grupoAhorro = GrupoAhorro_Collection.UpdateOne(filter_grupoAhorro, update_grupoAhorro);
+
+        }
+
+        public static void ActualizarSaldo_GrupoAhorro(GrupoAhorro_DB grupo_ahorro, float Saldo)
+        {
+            // Obteniendo la base de datos de la COLECCION.
+            var CuentaAhorro_Collection = CuentaAhorro_DB_GrupoAhorro.Obtener_CollecionCuentaAhorro();
+
+            // Obteniendo la cuenta de ahorros del usuario.
+
+            CuentaAhorro_DB_GrupoAhorro? CuentaAhorroGrupo = grupo_ahorro.CuentaAhorro;
+
+            // Actualizando la cuenta de ahorro del grupo.
+            var filter = Builders<CuentaAhorro_DB_GrupoAhorro>.Filter.Eq(c => c.Id, CuentaAhorroGrupo.Id);
+            var update = Builders<CuentaAhorro_DB_GrupoAhorro>.Update.Set(c => c.Saldo, Saldo);
+
+            var result = CuentaAhorro_Collection.UpdateOne(filter, update);
 
         }
 
