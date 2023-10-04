@@ -39,7 +39,6 @@ namespace Banco_CodigoLimpio.Clases
                     Console.WriteLine($"{indice}. {Grupo_ahorro.Nombre}", indice++);
 
                 }
-                Console.WriteLine("-----------------------------------------------");
             }
 
         }
@@ -49,7 +48,7 @@ namespace Banco_CodigoLimpio.Clases
             // Utilizar el filtro para encontrar el usuario en la colección
             Usuario_DB? Usuario = Usuario_DB.ObtenerUsuario_byName_DB(Usuario_App.Nombre);
 
-            List<GrupoAhorro_DB> grupos_ahorro_usuario_deseado = Usuario.GruposAhorro;
+            List<GrupoAhorro_DB> grupos_ahorro_usuario = Usuario.GruposAhorro;
 
             if (Usuario.GruposAhorro.Count == 0)
             {
@@ -66,7 +65,7 @@ namespace Banco_CodigoLimpio.Clases
                 Console.WriteLine("Los grupos de ahorro que tienes son:");
                 int indice = 1;
 
-                foreach (GrupoAhorro_DB Grupo_ahorro in grupos_ahorro_usuario_deseado)
+                foreach (GrupoAhorro_DB Grupo_ahorro in grupos_ahorro_usuario)
                 {
                     Console.WriteLine($"{indice}. {Grupo_ahorro.Nombre}", indice++);
 
@@ -78,9 +77,11 @@ namespace Banco_CodigoLimpio.Clases
 
                 int opcion_seleccionada = int.Parse(entrada);
 
-                if (opcion_seleccionada <= grupos_ahorro_usuario_deseado.Count)
+                if (opcion_seleccionada <= grupos_ahorro_usuario.Count)
                 {
-                    GrupoAhorro_DB GrupoAhorro_usuario_deseado = grupos_ahorro_usuario_deseado[opcion_seleccionada - 1];
+                    GrupoAhorro_DB GrupoAhorro_usuario_deseado = grupos_ahorro_usuario[opcion_seleccionada - 1];
+                    Console.WriteLine(GrupoAhorro_usuario_deseado.Nombre);
+
                     anadir_usuarios(Nombre_Usuario_deseado, GrupoAhorro_usuario_deseado);
 
                     Console.WriteLine("Usuario invitado exitosamente.");
@@ -108,13 +109,13 @@ namespace Banco_CodigoLimpio.Clases
                     // Verificar si el usuario ya está en el grupo
                     if (GrupoAhorro_usuario_deseado.Usuarios.Contains(usuario_deseado))
                     {
-                        // Agregar el usuario al grupo
-                        GrupoAhorro_DB.Actualizar_GrupoAhorro(usuario_deseado, GrupoAhorro_usuario_deseado);
+                        Console.WriteLine("El usuario ya está en el grupo.");
                     }
 
                     else
                     {
-                        Console.WriteLine("El usuario ya está en el grupo.");
+                        // Agregar el usuario al grupo
+                        GrupoAhorro_DB.Actualizar_GrupoAhorro(usuario_deseado, GrupoAhorro_usuario_deseado);
                     }
                 }
                 else
@@ -163,6 +164,10 @@ namespace Banco_CodigoLimpio.Clases
                 if (opcion_seleccionada <= grupos_usuario.Count)
                 {
                     GrupoAhorro_DB GrupoAhorro_deseado = grupos_usuario[opcion_seleccionada - 1];
+
+                    // Obteniendo el grupo de ahorro actualizado de la DB.
+
+                    GrupoAhorro_DB grupo_ahorro_actualizado = GrupoAhorro_DB.ObtenerGrupoAhorro_DB(GrupoAhorro_deseado);
                     float numero;
                     float NuevoSaldo_GrupoAhorro;
 
@@ -171,14 +176,14 @@ namespace Banco_CodigoLimpio.Clases
 
                     if (float.TryParse(entrada_saldo, out numero))
                     {
-                        NuevoSaldo_GrupoAhorro = Usuario.CuentaAhorro.Saldo + numero;
+                        NuevoSaldo_GrupoAhorro = grupo_ahorro_actualizado.CuentaAhorro.Saldo + numero;
                     }
                     else
                     {
                         return;
                     }
 
-                    GrupoAhorro_DB.ActualizarSaldo_GrupoAhorro(GrupoAhorro_deseado, NuevoSaldo_GrupoAhorro);
+                    GrupoAhorro_DB.ActualizarSaldo_GrupoAhorro(grupo_ahorro_actualizado, NuevoSaldo_GrupoAhorro);
                     Console.WriteLine("Capital ingresado exitosamente.");
                 }
                 else

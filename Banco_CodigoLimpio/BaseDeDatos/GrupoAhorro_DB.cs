@@ -53,6 +53,24 @@ namespace Banco_CodigoLimpio.BaseDeDatos
             return lista_GrupoAhorro;
 
         }
+
+        public static GrupoAhorro_DB ObtenerGrupoAhorro_DB(GrupoAhorro_DB grupo_ahorro_actualizar)
+        {
+            // Obteniendo la base de datos de la COLECCION.
+            List<GrupoAhorro_DB> GruposAhorro = Obtener_GruposAhorro_DB();
+
+            // Verificando si existe el usuario.
+
+            foreach (var GrupoAhorro in GruposAhorro)
+            {
+                if (GrupoAhorro.Id == grupo_ahorro_actualizar.Id)
+                {
+                    return GrupoAhorro;
+                }
+            }
+
+            return null;
+        }
         public static void CrearGrupoAhorro(Usuario_DB usuario)
         {
             // Verificando si el usuario puede crear el grupo.
@@ -76,9 +94,6 @@ namespace Banco_CodigoLimpio.BaseDeDatos
                 // Obteniendo la base de datos de la COLECCION de los grupos de Ahorro.
                 var GrupoAhorro_Collection = Obtener_CollecionGrupoAhorro();
 
-                // Obteniendo la base de datos de la COLECCION de los usuarios.
-                var Usuarios_Collection = Usuario_DB.Obtener_CollecionUsuarios();
-
                 // Generando la cuenta de ahorro en la base de datos.
                 var Grupo_Ahorro = new GrupoAhorro_DB(Nombre_GrupoAhorro);
 
@@ -87,13 +102,7 @@ namespace Banco_CodigoLimpio.BaseDeDatos
 
                 GrupoAhorro_Collection.InsertOne(Grupo_Ahorro);
 
-                CuentaAhorro_DB_GrupoAhorro.CrearCuentaAhorro_GrupoAhorro(Grupo_Ahorro);
-
-                // Actualizando la lista de grupos de ahorro del usuario.
-                var filter = Builders<Usuario_DB>.Filter.Eq(u => u.Id, usuario.Id);
-                var update = Builders<Usuario_DB>.Update.Push(u => u.GruposAhorro, Grupo_Ahorro);
-
-                var result = Usuarios_Collection.UpdateOne(filter, update);
+                CuentaAhorro_DB_GrupoAhorro.CrearCuentaAhorro_GrupoAhorro(Grupo_Ahorro, usuario);
 
             }
             else
@@ -141,17 +150,17 @@ namespace Banco_CodigoLimpio.BaseDeDatos
             // Obteniendo la base de datos de la COLECCION de los usuarios.
             var Usuarios_Collection = Usuario_DB.Obtener_CollecionUsuarios();
 
-            // Actualizando la lista de grupos de ahorro del usuario.
-            var filter_user = Builders<Usuario_DB>.Filter.Eq(u => u.Id, usuario.Id);
-            var update_user = Builders<Usuario_DB>.Update.Push(u => u.GruposAhorro, Grupo_Ahorro);
-
-            var result_user = Usuarios_Collection.UpdateOne(filter_user, update_user);
-
             // Actualizando la lista de usuarios en el grupo de ahorro.
             var filter_grupoAhorro = Builders<GrupoAhorro_DB>.Filter.Eq(g => g.Id, Grupo_Ahorro.Id);
             var update_grupoAhorro = Builders<GrupoAhorro_DB>.Update.Push(g => g.Usuarios, usuario);
 
             var result_grupoAhorro = GrupoAhorro_Collection.UpdateOne(filter_grupoAhorro, update_grupoAhorro);
+
+            // Actualizando la lista de grupos de ahorro del usuario.
+            var filter_user = Builders<Usuario_DB>.Filter.Eq(u => u.Id, usuario.Id);
+            var update_user = Builders<Usuario_DB>.Update.Push(u => u.GruposAhorro, Grupo_Ahorro);
+
+            var result_user = Usuarios_Collection.UpdateOne(filter_user, update_user);
 
         }
 
@@ -162,7 +171,7 @@ namespace Banco_CodigoLimpio.BaseDeDatos
 
             // Obteniendo la cuenta de ahorros del usuario.
 
-            CuentaAhorro_DB_GrupoAhorro? CuentaAhorroGrupo = grupo_ahorro.CuentaAhorro;
+            CuentaAhorro_DB_GrupoAhorro CuentaAhorroGrupo = grupo_ahorro.CuentaAhorro;
 
             // Actualizando la cuenta de ahorro del grupo.
             var filter = Builders<CuentaAhorro_DB_GrupoAhorro>.Filter.Eq(c => c.Id, CuentaAhorroGrupo.Id);

@@ -22,7 +22,7 @@ namespace Banco_CodigoLimpio.Menus
             Console.WriteLine("5. Ingresar capital grupo de Ahorro");
             Console.WriteLine("6. Pedir prestamo");
             Console.WriteLine("7. Mis prestamos");
-            Console.WriteLine("8. Volver al menu principal.");
+            Console.WriteLine("8. Salir del menu.");
             Console.Write("Ingrese la opción deseada: ");
 
             int opcion = int.Parse(Console.ReadLine());
@@ -93,7 +93,8 @@ namespace Banco_CodigoLimpio.Menus
 
             Console.WriteLine(" Usuario de la cuenta ");
             Console.WriteLine(CuentaAhorro_DB_Usuario.ObtenerNombreUsuario(Usuario));
-            
+
+            Console.WriteLine("-----------------------------------------------");
             Console.WriteLine(" Ingresa 1 para volver al menu de usuario");
             
             int opcion = int.Parse(Console.ReadLine());
@@ -117,13 +118,14 @@ namespace Banco_CodigoLimpio.Menus
             Console.WriteLine($"-- GRUPO DE AHORRO --");
             Console.WriteLine("1. Ingresar capital a grupo de ahorro");
             Console.WriteLine("2. Volver al menú principal.");
+            Console.Write("Ingrese la opción deseada: ");
 
             int opcion = int.Parse(Console.ReadLine());
 
             switch (opcion)
             {
                 case 1:
-                    // Lógica para ingresar capital al grupo de ahorro
+                    GrupoAhorro.ingresar_capital_grupo_ahorro(Usuario);
                     break;
 
                 case 2:

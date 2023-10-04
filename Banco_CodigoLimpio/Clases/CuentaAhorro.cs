@@ -9,6 +9,7 @@ namespace Banco_CodigoLimpio.Clases
 {
     public class CuentaAhorro
     {
+        /*
         public void ingresar_capital(Usuario_DB Usuario_App)
         {
             // Utilizar el filtro para encontrar el usuario en la colección
@@ -31,10 +32,7 @@ namespace Banco_CodigoLimpio.Clases
 
             Usuario_DB.ActualizarSaldo_Usuario(Usuario, NuevoSaldo_CuentaAhorro_Usuario);
         }
-        public void solicitar_prestamo()
-        {
-
-        }
+        */
 
         public void realizar_transferencia()
         {
