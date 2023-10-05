@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Banco_CodigoLimpio.BaseDeDatos
 {
@@ -19,24 +20,28 @@ namespace Banco_CodigoLimpio.BaseDeDatos
         public string Fecha { get; set; }
 
         [BsonElement("saldo_actual")]
-        public int SaldoActual { get; set; }
+        public float SaldoActual_CuentaAhorroUsuario { get; set; }
+
+        [BsonElement("saldo_final")]
+        public float SaldoFinal_CuentaAhorroUsuario { get; set; }
+
+        [BsonElement("monto")]
+        public float Monto { get; set; }
 
         [BsonElement("tipo_de_movimiento")]
         public string TipoDeMovimiento { get; set; }
 
-        [BsonElement("monto")]
-        public int Monto { get; set; }
+        [BsonElement("grupo_asociado")]
+        public GrupoAhorro_DB GrupoAsociado { get; set; }
 
-        [BsonElement("saldo_final")]
-        public int SaldoFinal { get; set; }
-
-        public Movimiento_DB(string fecha, int saldoActual, string tipoDeMovimiento, int monto, int saldoFinal)
+        public Movimiento_DB(string fecha, float saldoActual_CuentaAhorroUsuario, float saldoFinal_CuentaAhorroUsuario, float monto, string tipoDeMovimiento, GrupoAhorro_DB grupo_asociado)
         {
             Fecha = fecha;
-            SaldoActual = saldoActual;
+            SaldoActual_CuentaAhorroUsuario = saldoActual_CuentaAhorroUsuario;
+            SaldoFinal_CuentaAhorroUsuario = saldoFinal_CuentaAhorroUsuario;
             TipoDeMovimiento = tipoDeMovimiento;
             Monto = monto;
-            SaldoFinal = saldoFinal;
+            GrupoAsociado = grupo_asociado;
         }
 
         public static IMongoCollection<Movimiento_DB> Obtener_CollecionMovimiento()
@@ -61,15 +66,17 @@ namespace Banco_CodigoLimpio.BaseDeDatos
             return lista_movimientos;
 
         }
-        public static void CrearMovimiento(string fecha, int saldoActual, string tipoDeMovimiento, int monto, int saldoFinal)
+        public static Movimiento_DB CrearMovimiento(string fecha, float saldoActual_CuentaAhorroUsuario, float saldoFinal_CuentaAhorroUsuario, float monto, string tipoDeMovimiento, GrupoAhorro_DB grupo_asociado)
         {
             // Obteniendo la base de datos de la COLECCION.
             var Movimiento_Collection = Obtener_CollecionMovimiento();
 
             // Generando el movimiento en la base de datos.
-            var movimiento = new Movimiento_DB(fecha,saldoActual,tipoDeMovimiento,monto,saldoFinal);
+            var movimiento = new Movimiento_DB(fecha, saldoActual_CuentaAhorroUsuario, saldoFinal_CuentaAhorroUsuario, monto, tipoDeMovimiento, grupo_asociado);
 
             Movimiento_Collection.InsertOne(movimiento);
+
+            return movimiento;
         }
 
         public static List<Movimiento_DB> ObtenerMovimientos_usuario(Usuario_DB usuario_asociado)

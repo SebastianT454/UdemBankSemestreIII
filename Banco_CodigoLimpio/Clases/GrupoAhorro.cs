@@ -176,14 +176,16 @@ namespace Banco_CodigoLimpio.Clases
 
                     if (float.TryParse(entrada_saldo, out numero))
                     {
+                        Console.WriteLine("Antes de la operacion: " + grupo_ahorro_actualizado.CuentaAhorro.Saldo);
                         NuevoSaldo_GrupoAhorro = grupo_ahorro_actualizado.CuentaAhorro.Saldo + numero;
+                        Console.WriteLine("Despues de la operacion: " + NuevoSaldo_GrupoAhorro);
                     }
                     else
                     {
                         return;
                     }
 
-                    GrupoAhorro_DB.ActualizarSaldo_GrupoAhorro(grupo_ahorro_actualizado, NuevoSaldo_GrupoAhorro);
+                    GrupoAhorro_DB.ActualizarSaldo_GrupoAhorro(Usuario, grupo_ahorro_actualizado, NuevoSaldo_GrupoAhorro);
                     Console.WriteLine("Capital ingresado exitosamente.");
                 }
                 else

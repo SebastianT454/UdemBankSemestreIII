@@ -164,20 +164,33 @@ namespace Banco_CodigoLimpio.BaseDeDatos
 
         }
 
-        public static void ActualizarSaldo_GrupoAhorro(GrupoAhorro_DB grupo_ahorro, float Saldo)
+        public static void ActualizarSaldo_GrupoAhorro(Usuario_DB usuario, GrupoAhorro_DB grupo_ahorro, float Saldo)
         {
             // Obteniendo la base de datos de la COLECCION.
             var CuentaAhorro_Collection = CuentaAhorro_DB_GrupoAhorro.Obtener_CollecionCuentaAhorro();
+
+            // Obteniendo la base de datos de la COLECCION de los grupos de Ahorro.
+            var GrupoAhorro_Collection = Obtener_CollecionGrupoAhorro();
 
             // Obteniendo la cuenta de ahorros del usuario.
 
             CuentaAhorro_DB_GrupoAhorro CuentaAhorroGrupo = grupo_ahorro.CuentaAhorro;
 
             // Actualizando la cuenta de ahorro del grupo.
-            var filter = Builders<CuentaAhorro_DB_GrupoAhorro>.Filter.Eq(c => c.Id, CuentaAhorroGrupo.Id);
-            var update = Builders<CuentaAhorro_DB_GrupoAhorro>.Update.Set(c => c.Saldo, Saldo);
+            var filter_CuentaAhorro = Builders<CuentaAhorro_DB_GrupoAhorro>.Filter.Eq(c => c.Id, CuentaAhorroGrupo.Id);
+            var update_CuentaAhorro = Builders<CuentaAhorro_DB_GrupoAhorro>.Update.Set(c => c.Saldo, Saldo);
 
-            var result = CuentaAhorro_Collection.UpdateOne(filter, update);
+            var result_CuentaAhorro = CuentaAhorro_Collection.UpdateOne(filter_CuentaAhorro, update_CuentaAhorro);
+
+            // Actualizando la cuenta de ahorro en el grupo.
+            var filter_CuentaAhorroGrupo = Builders<GrupoAhorro_DB>.Filter.Eq(g => g.Id, grupo_ahorro.Id);
+            var update_CuentaAhorroGrupo = Builders<GrupoAhorro_DB>.Update.Set(g => g.CuentaAhorro.Saldo, Saldo);
+
+            var result_CuentaAhorroGrupo = GrupoAhorro_Collection.UpdateOne(filter_CuentaAhorroGrupo, update_CuentaAhorroGrupo);
+
+            // Creando el movimiento generado de esta accion.
+
+            Movimiento.crear(usuario, grupo_ahorro, Saldo, "Transaccion");
 
         }
 
