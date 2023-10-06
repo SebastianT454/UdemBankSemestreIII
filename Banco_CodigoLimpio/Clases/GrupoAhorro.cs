@@ -195,11 +195,117 @@ namespace Banco_CodigoLimpio.Clases
             }
 
         }
-        public static void pagar_prestamo()
+        public static void realizar_prestamo(Usuario_DB Usuario_App, float Monto_a_pedir, int Cuotas)
         {
+            // Utilizar el filtro para encontrar el usuario en la colección
+            Usuario_DB? Usuario_ = Usuario_DB.ObtenerUsuario_byName_DB(Usuario_App.Nombre);
+
+            List<GrupoAhorro_DB> grupos_usuario = Usuario_.GruposAhorro;
+
+            if (Usuario_.GruposAhorro.Count == 0)
+            {
+                Console.WriteLine("No tienes grupos de ahorro.");
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Que grupo deseas escojer: ");
+                Console.WriteLine("1. Mis grupos");
+                Console.WriteLine("2. Otro grupos");
+                Console.WriteLine("3. Cancelar");
+                Console.Write("Ingrese la opción deseada: ");
+
+                int opcion = int.Parse(Console.ReadLine());
+
+                switch (opcion)
+                {
+                    case 1:
+                        Console.WriteLine("-----------------------------------------------");
+                        GrupoAhorro_DB GrupoAhorro_deseado = obtener_grupo_especifico_usuario(Usuario_);
+
+                        float Monto_usuario = obtener_capital_ingresado_usuario(Usuario_App, GrupoAhorro_deseado);
+
+                        if (Monto_a_pedir > Monto_usuario)
+                        {
+                            Console.WriteLine("El préstamo supera el monto total invertido por el usuario");
+                            break;
+                        }
+                        else if(Cuotas < Configuracion.min_plazo_de_pago)
+                        {
+                            Console.WriteLine("El plazo de pago es inferior a dos meses");
+                            break;
+                        }
+
+                        Movimiento.crear(Usuario_, GrupoAhorro_deseado, Monto_a_pedir, "PrestamoGrupoPropio");
+
+                        break;
+                    case 2:
+                        Console.WriteLine("-----------------------------------------------");
+                        // Otros grupos
+                        break;
+                    case 3:
+                        Menus.MenuClases.Menu_Usuario(Usuario_);
+                        break;
+                    default:
+                        Console.WriteLine("Opción no válida. Por favor, ingrese una opción válida.");
+                        Console.WriteLine("-----------------------------------------------");
+                        break;
+                }
+            }
 
         }
 
+        public static float obtener_capital_ingresado_usuario(Usuario_DB Usuario_App, GrupoAhorro_DB GrupoAhorro_deseado)
+        {
+            List<Movimiento_DB> movimientos = Usuario_App.Movimientos;
+
+            float monto_usuario = 0;
+
+            foreach(Movimiento_DB movimiento in movimientos) 
+            {
+                if (movimiento.GrupoAsociado == GrupoAhorro_deseado) 
+                {
+                    monto_usuario += movimiento.Monto;
+                }
+            }
+
+            return monto_usuario;
+
+        }
+
+        public static GrupoAhorro_DB obtener_grupo_especifico_usuario(Usuario_DB Usuario)
+        {
+            List<GrupoAhorro_DB> grupos_usuario = Usuario.GruposAhorro;
+
+            Console.WriteLine("-----------------------------------------------");
+
+            Console.WriteLine("Los grupos de ahorro que tienes son:");
+            int indice = 1;
+
+            foreach (GrupoAhorro_DB Grupo_ahorro in grupos_usuario)
+            {
+                Console.WriteLine($"{indice}. {Grupo_ahorro.Nombre}", indice++);
+
+            }
+            Console.WriteLine("-----------------------------------------------");
+
+            Console.Write("Elige el grupo que quieres pedir el prestamo: ");
+            string entrada = Console.ReadLine();
+
+            int opcion_seleccionada = int.Parse(entrada);
+
+            if (opcion_seleccionada <= grupos_usuario.Count)
+            {
+                GrupoAhorro_DB GrupoAhorro_deseado = grupos_usuario[opcion_seleccionada - 1];
+
+                return GrupoAhorro_deseado;
+            }
+            else
+            {
+                Console.WriteLine("Opcion no valida");
+                return null;
+            }
+        }
         public static void disolver()
         {
 

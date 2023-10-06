@@ -94,7 +94,6 @@ namespace Banco_CodigoLimpio.Menus
             Console.WriteLine(" Usuario de la cuenta ");
             Console.WriteLine(CuentaAhorro_DB_Usuario.ObtenerNombreUsuario(Usuario));
 
-            Console.WriteLine("-----------------------------------------------");
             Console.WriteLine(" Ingresa 1 para volver al menu de usuario");
             
             int opcion = int.Parse(Console.ReadLine());
@@ -141,16 +140,15 @@ namespace Banco_CodigoLimpio.Menus
 
         public static void Menu_pedir_prestamo(Usuario_DB Usuario)
         {
+            float Monto_a_pedir;
+            int Cuotas;
 
             Console.WriteLine("-- PEDIR UN PRESTAMO --");
-            Console.WriteLine("Selecciona uno de los siguientes grupos de ahorro para pedir el prestamo");
-            //aqui va la logica pa la vueltica de mostarlos grupos de ahorro disponible
-            int Grupo_a_pedir = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Ingrese la cantidad de dinero que quiere pedir a prestamo");
             try
             {
-                int Monto_a_pedir = int.Parse(Console.ReadLine());
+                Monto_a_pedir = int.Parse(Console.ReadLine());
             }
 
             catch (FormatException)
@@ -163,7 +161,7 @@ namespace Banco_CodigoLimpio.Menus
 
             try
             {
-                int Cuotas = int.Parse(Console.ReadLine());
+                Cuotas = int.Parse(Console.ReadLine());
             }
 
             catch (FormatException)
@@ -171,6 +169,9 @@ namespace Banco_CodigoLimpio.Menus
                 Console.WriteLine("El valor no es un número válido.");
                 Menu_pedir_prestamo(Usuario);
             }
+
+            GrupoAhorro.realizar_prestamo(Usuario, Monto_a_pedir, Cuotas);
+
         }
 
         public static void Menu_mis_prestamos(Usuario_DB Usuario)

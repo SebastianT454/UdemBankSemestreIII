@@ -12,7 +12,7 @@ namespace Banco_CodigoLimpio.Clases
 {
     public class Usuario
     {
-
+      
         public void ver_historial_movimientos()
         {
 

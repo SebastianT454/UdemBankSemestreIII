@@ -14,5 +14,12 @@ namespace Banco_CodigoLimpio
 
         // Configuracion Grupos de Ahorro.
         public static int max_grupos_ahorro_por_usuario = 3;
+
+        // Configuracion Prestamos.
+        public static int min_plazo_de_pago = 2;
+
+        public static int tasa_de_interes_grupo_usuario = 3;
+        public static int tasa_de_interes_otro_grupo = 5;
+
     }
 }
