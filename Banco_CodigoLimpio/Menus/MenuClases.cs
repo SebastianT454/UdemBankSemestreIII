@@ -19,7 +19,7 @@ namespace Banco_CodigoLimpio.Menus
             Console.WriteLine("2. Invitar Usuario al Grupo de Ahorro");
             Console.WriteLine("3. Mi cuenta de ahorro");
             Console.WriteLine("4. Mis grupos de ahorro");
-            Console.WriteLine("5. Ingresar capital grupo de Ahorro");
+            Console.WriteLine("5. Ingresar capital Grupo de Ahorro");
             Console.WriteLine("6. Pedir prestamo");
             Console.WriteLine("7. Mis prestamos");
             Console.WriteLine("8. Salir del menu.");
@@ -116,7 +116,8 @@ namespace Banco_CodigoLimpio.Menus
         {
             Console.WriteLine($"-- GRUPO DE AHORRO --");
             Console.WriteLine("1. Ingresar capital a grupo de ahorro");
-            Console.WriteLine("2. Volver al menú principal.");
+            Console.WriteLine("2. Disolver Grupo de Ahorro");
+            Console.WriteLine("3. Volver al menú principal.");
             Console.Write("Ingrese la opción deseada: ");
 
             int opcion = int.Parse(Console.ReadLine());
@@ -128,6 +129,10 @@ namespace Banco_CodigoLimpio.Menus
                     break;
 
                 case 2:
+                    GrupoAhorro.disolver(Usuario);
+                    break;
+
+                case 3:
                     Console.WriteLine("-----------------------------------------------");
                     Menu_Usuario(Usuario); // Vuelve al menú principal
                     break;
@@ -140,8 +145,8 @@ namespace Banco_CodigoLimpio.Menus
 
         public static void Menu_pedir_prestamo(Usuario_DB Usuario)
         {
-            float Monto_a_pedir;
-            int Cuotas;
+            float Monto_a_pedir = 0;
+            int Cuotas = 0;
 
             Console.WriteLine("-- PEDIR UN PRESTAMO --");
 

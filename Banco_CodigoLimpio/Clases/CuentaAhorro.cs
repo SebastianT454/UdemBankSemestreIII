@@ -7,34 +7,18 @@ using System.Threading.Tasks;
 
 namespace Banco_CodigoLimpio.Clases
 {
-    public class CuentaAhorro
+    public static class CuentaAhorro
     {
-        /*
-        public void ingresar_capital(Usuario_DB Usuario_App)
+
+        public static void ingresar_capital_cuenta_ahorro_usuario(Usuario_DB Usuario, float numero)
         {
-            // Utilizar el filtro para encontrar el usuario en la colección
-            Usuario_DB? Usuario = Usuario_DB.ObtenerUsuario_byName_DB(Usuario_App.Nombre);
-
-            float numero;
-            float NuevoSaldo_CuentaAhorro_Usuario;
-
-            Console.Write("Ingrese un número: ");
-            string entrada = Console.ReadLine();
-
-            if (float.TryParse(entrada, out numero))
-            {
-                NuevoSaldo_CuentaAhorro_Usuario = Usuario.CuentaAhorro.Saldo + numero;
-            }
-            else
-            {
-                return;
-            }
+            float NuevoSaldo_CuentaAhorro_Usuario = Usuario.CuentaAhorro.Saldo + numero;
 
             Usuario_DB.ActualizarSaldo_Usuario(Usuario, NuevoSaldo_CuentaAhorro_Usuario);
         }
-        */
+        
 
-        public void realizar_transferencia()
+        public static void realizar_transferencia()
         {
 
         }

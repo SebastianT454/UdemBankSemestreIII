@@ -190,7 +190,7 @@ namespace Banco_CodigoLimpio.BaseDeDatos
 
             // Creando el movimiento generado de esta accion.
 
-            Movimiento.crear(usuario, grupo_ahorro, Saldo, "Transaccion");
+            Movimiento.crear(usuario, grupo_ahorro, Saldo, "Transferencia");
 
         }
 

@@ -9,6 +9,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+#pragma warning disable CS8604 // Posible argumento de referencia nulo
+
 namespace Banco_CodigoLimpio.Clases
 {
     public class Movimiento

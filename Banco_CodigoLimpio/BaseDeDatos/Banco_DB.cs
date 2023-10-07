@@ -38,7 +38,7 @@ namespace Banco_CodigoLimpio.BaseDeDatos
             return Banco_Collection;
         }
 
-        public static void CrearBanco()
+        public static Banco_DB CrearBanco()
         {
             // Obteniendo la base de datos de la COLECCION.
             var Banco_Collection = Obtener_CollecionBanco();
@@ -47,6 +47,8 @@ namespace Banco_CodigoLimpio.BaseDeDatos
             var banco = new Banco_DB();
 
             Banco_Collection.InsertOne(banco);
+
+            return banco;
         }
 
         public static float ObtenerComisionTotal(Banco_DB banco)
@@ -69,6 +71,27 @@ namespace Banco_CodigoLimpio.BaseDeDatos
 
         }
 
+        public static Banco_DB Obtener_banco()
+        {
+            // Obteniendo la base de datos de la COLECCION.
+            var Banco_Collection = Obtener_CollecionBanco();
+
+            List<Banco_DB> lista_Banco = Banco_Collection.Find(d => true).ToList();
+
+            // verificando existencia.
+
+            if(lista_Banco.Count == 0)
+            {
+                Banco_DB banco = CrearBanco();
+
+                return banco;
+            }
+            else
+            {
+                return lista_Banco[0];
+            }
+
+        }
 
     }
 }

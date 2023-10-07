@@ -23,10 +23,5 @@ namespace Banco_CodigoLimpio.Clases
         }
     }
 
-    public static class Banco_Configuracion
-    {
-        // Configuracion Tasas dentro del banco.
-        public static float tasa_transaccion = 3;
-    }
 
 }
