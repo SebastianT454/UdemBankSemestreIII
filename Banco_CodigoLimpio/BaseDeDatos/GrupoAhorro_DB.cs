@@ -25,10 +25,14 @@ namespace Banco_CodigoLimpio.BaseDeDatos
         [BsonElement("cuenta_ahorro")]
         public CuentaAhorro_DB_GrupoAhorro? CuentaAhorro { get; set; }
 
+        [BsonElement("ganancias")]
+        public float Ganacias { get; set; }
+
         public GrupoAhorro_DB(string nombre)
         {
             Nombre = nombre;
             Usuarios = new List<Usuario_DB>();
+            Ganacias = 0;
         }
 
         public static IMongoCollection<GrupoAhorro_DB> Obtener_CollecionGrupoAhorro()

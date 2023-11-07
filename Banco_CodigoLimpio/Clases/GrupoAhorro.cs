@@ -19,6 +19,7 @@ namespace Banco_CodigoLimpio.Clases
             GrupoAhorro_DB.CrearGrupoAhorro(Usuario);
             Console.WriteLine("Grupo de Ahorro generado.");
         }
+
         public static void mostrar_mis_grupos_ahorro(Usuario_DB Usuario_App)
         {
             // Utilizar el filtro para encontrar el usuario en la colección
@@ -274,9 +275,11 @@ namespace Banco_CodigoLimpio.Clases
 
             foreach(Movimiento_DB movimiento in movimientos) 
             {
-                if (movimiento.GrupoAsociado == GrupoAhorro_deseado) 
+
+                if (movimiento.GrupoAsociado.Id == GrupoAhorro_deseado.Id) 
                 {
                     monto_usuario += movimiento.Monto;
+                    Console.WriteLine("if condicional: ", monto_usuario);
                 }
             }
 
@@ -493,8 +496,11 @@ namespace Banco_CodigoLimpio.Clases
                     Console.WriteLine("Opcion no valida");
                 }
             }
-
         }
 
+        public static void calcular_ganancias(GrupoAhorro_DB grupo)
+        {
+
+        }
     }
 }

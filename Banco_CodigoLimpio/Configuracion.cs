@@ -20,6 +20,6 @@ namespace Banco_CodigoLimpio
 
         public static int tasa_de_interes_grupo_usuario = 3;
         public static int tasa_de_interes_otro_grupo = 5;
-
+        public static int tasa_de_interes_reducida = 1;
     }
 }

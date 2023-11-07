@@ -12,55 +12,83 @@ namespace Banco_CodigoLimpio.Clases
 {
     public class EquipoDeFidelizacion
     {
-        //public GrupoAhorro EquipoConMayorGanancias { get; set; }
-        public List<Usuario> UsuariosConMayorAportes { get; set; }
-
-        public EquipoDeFidelizacion(List<Usuario> usuariosConMayorAportes)
+        public List<Usuario_DB> ObtenerUsuariosConMayorContribucionPorGrupo()
         {
-            //EquipoConMayorGanancias = equipoConMayorGanancias;
-            UsuariosConMayorAportes = usuariosConMayorAportes;
-        }
+            List<GrupoAhorro_DB> gruposDeAhorro = GrupoAhorro_DB.Obtener_GruposAhorro_DB();
+            List<Usuario_DB> usuariosConMayorContribucionPorGrupo = new List<Usuario_DB>();
 
-        public static void PremiarEquipoMasGanancias()
-        {
-            // Obtener todos los grupos de ahorro desde la base de datos
-            /*var gruposDeAhorro = GrupoAhorro_DB.Obtener_GruposAhorro_DB();
-
-            GrupoAhorro_DB equipoMasGanancias = null;
-            decimal maxGanancias = decimal.MinValue;
-
-            foreach (var grupoAhorro in gruposDeAhorro)
+            foreach (GrupoAhorro_DB grupo in gruposDeAhorro)
             {
-                decimal totalGanancias = grupoAhorro.CalcularTotalGanancias(); // Implementa este método en tu clase CuentaAhorro_DB_GrupoAhorro
+                Usuario_DB usuarioConMayorContribucion = ObtenerUsuarioConMayorContribucion(grupo);
 
-                if (totalGanancias > maxGanancias)
+                if (usuarioConMayorContribucion != null)
                 {
-                    maxGanancias = totalGanancias;
-                    equipoMasGanancias = grupoAhorro;
+                    usuariosConMayorContribucionPorGrupo.Add(usuarioConMayorContribucion);
                 }
             }
 
-            if (equipoMasGanancias != null)
-            {
-                decimal premio = equipoMasGanancias.ObtenerSaldoActual() * 0.10m;
-                equipoMasGanancias.AgregarSaldo(premio); // Implementa este método en tu clase CuentaAhorro_DB_GrupoAhorro
-            }*/
+            return usuariosConMayorContribucionPorGrupo;
         }
 
-        public static void PremiarUsuariosQueMasAportan()
+
+        public Usuario_DB ObtenerUsuarioConMayorContribucion(GrupoAhorro_DB grupoAhorro)
         {
-            // Obtener todos los grupos de ahorro desde la base de datos
-            /*var gruposDeAhorro = Obtener_GruposAhorro_DB();
+            List<Usuario_DB> usuariosDelGrupo = grupoAhorro.Usuarios;
 
-            foreach (var grupoAhorro in gruposDeAhorro)
+            if (usuariosDelGrupo.Count == 0)
             {
-                List<Usuario_DB> usuariosQueMasAportan = grupoAhorro.ObtenerUsuariosQueMasAportan(); // Implementa este método en tu clase CuentaAhorro_DB_GrupoAhorro
+                return null; // No hay usuarios en el grupo.
+            }
 
-                foreach (var usuario in usuariosQueMasAportan)
+            Usuario_DB usuarioMayorContribucion = null;
+            float mayorContribucion = 0;
+
+            foreach (Usuario_DB usuario in usuariosDelGrupo)
+            {
+                float contribucionUsuario = GrupoAhorro.obtener_capital_ingresado_usuario(usuario, grupoAhorro);
+
+                if (contribucionUsuario > mayorContribucion)
                 {
-                    usuario.ReducirComision(0.01m); // Implementa este método en tu clase Usuario_DB
+                    mayorContribucion = contribucionUsuario;
+                    usuarioMayorContribucion = usuario;
                 }
-            }*/
+            }
+
+            return usuarioMayorContribucion;
         }
+
+        public static void PremiarEquipoConMasGanancias()
+        {
+            // Obtener todos los grupos de ahorro
+            List<GrupoAhorro_DB> gruposAhorro = GrupoAhorro_DB.Obtener_GruposAhorro_DB();
+
+            float maxGanancias = 0;
+            GrupoAhorro_DB equipoGanador = null;
+
+            foreach (GrupoAhorro_DB grupo in gruposAhorro)
+            {
+                // Calcular las ganancias actuales del grupo
+                float ganancias = grupo.CuentaAhorro.Saldo - grupo.CuentaAhorro.SaldoInicial;
+
+                if (ganancias > maxGanancias)
+                {
+                    maxGanancias = ganancias;
+                    equipoGanador = grupo;
+                }
+            }
+
+            if (equipoGanador != null)
+            {
+                // Inyectar el 10% de su saldo actual
+                float premio = equipoGanador.CuentaAhorro.Saldo * 0.10f;
+                GrupoAhorro.ingresar_capital_grupo_ahorro(equipoGanador, premio);
+                Console.WriteLine($"El equipo ganador {equipoGanador.Nombre} ha recibido un premio de {premio}.");
+            }
+            else
+            {
+                Console.WriteLine("No hay equipos de ahorro registrados.");
+            }
+        }
+
     }
 }

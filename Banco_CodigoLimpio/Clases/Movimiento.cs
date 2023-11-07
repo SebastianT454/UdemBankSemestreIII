@@ -17,6 +17,17 @@ namespace Banco_CodigoLimpio.Clases
     {
         public static void crear(Usuario_DB Usuario, GrupoAhorro_DB GrupoAhorro, float Monto, string TipoDeMovimiento)
         {
+            float saldoFinal_Monto = 0;
+
+            if(TipoDeMovimiento == "Transferencia") 
+            {
+                saldoFinal_Monto = Usuario.CuentaAhorro.Saldo - Monto;
+            }
+            else
+            {
+                saldoFinal_Monto = Usuario.CuentaAhorro.Saldo + Monto;
+            }
+
             // Obteniendo la base de datos de la COLECCION de los movimientos.
             var Movimiento_Collection = Movimiento_DB.Obtener_CollecionMovimiento();
 
@@ -27,7 +38,7 @@ namespace Banco_CodigoLimpio.Clases
 
             string fecha = DateTime.Now.ToString("HH:mm:ss");
             float saldoActual_CuentaAhorroUsuario = Usuario.CuentaAhorro.Saldo;
-            float saldoFinal_CuentaAhorroUsuario = Usuario.CuentaAhorro.Saldo + Monto;
+            float saldoFinal_CuentaAhorroUsuario = saldoFinal_Monto;
             float monto = Monto;
             string tipoDeMovimiento = TipoDeMovimiento;
             GrupoAhorro_DB grupo_asociado = GrupoAhorro;

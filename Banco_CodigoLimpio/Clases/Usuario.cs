@@ -89,7 +89,7 @@ namespace Banco_CodigoLimpio.Clases
                             valores_movimientos.Add(deuda_movimiento);
 
                         }
-                        else if (movimiento.TipoDeMovimiento == "PrestamoOtrosGruposAhorro")
+                        if (movimiento.TipoDeMovimiento == "PrestamoOtrosGruposAhorro")
                         {
                             int tasa_de_interes = Configuracion.tasa_de_interes_otro_grupo;
 
@@ -127,6 +127,5 @@ namespace Banco_CodigoLimpio.Clases
         }
 
     }
-
 }
 
